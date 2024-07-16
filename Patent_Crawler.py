@@ -2,7 +2,7 @@
 You should do this steps in order ro run this code:
     * Use Search_Url_Finder.py to Download CSV file which contain url of each patent
     * Copy it (CSV file) to path where this code exist
-    * Rename it to gp-search.csv
+    * Rename it to gp-search-2.csv
     
 This code extract this information from patents page from Google Patents and store them into datafram:
     - ID
@@ -18,8 +18,8 @@ This code extract this information from patents page from Google Patents and sto
 The code have capability to resume from last run. So don't worry if something unwanted happend (i.e  Power outage!)
 
 This code create two files in the code directory :
-    patents_data.csv --> Contain all information scraped from patents pages
-    not_scrap_pickle --> Contain all pantents from gp-search.csv which weren't scrapped 
+    patents_data_2.csv --> Contain all information scraped from patents pages
+    not_scrap_pickle --> Contain all pantents from gp-search-2.csv which weren't scrapped 
     
 @author: zil.ink/anvaari
 """
@@ -36,18 +36,18 @@ import pickle
 
 script_path=os.path.dirname(os.path.abspath(__file__))
 
-# Make sure gp-search.csv exist  
-while not os.path.isfile(join(script_path,'gp-search.csv')):
-    print('\nYou should do this steps in order ro run this code:\n\t* Use Search_Url_Finder.py to Download CSV file which contain url of each patent\n\t* Copy it (CSV file) to path where this code exist\n\t* Rename it to gp-search.csv\n')
-    print("\ngp-search.csv doesn't find. It should exist where this code exist\n")
+# Make sure gp-search-2.csv exist  
+while not os.path.isfile(join(script_path,'gp-search-2.csv')):
+    print('\nYou should do this steps in order ro run this code:\n\t* Use Search_Url_Finder.py to Download CSV file which contain url of each patent\n\t* Copy it (CSV file) to path where this code exist\n\t* Rename it to gp-search-2.csv\n')
+    print("\ngp-search-2.csv doesn't find. It should exist where this code exist\n")
     temp_=input('\nPlease copy the file and  press Enter\n')
 # Import search-gp.csv as dataframe
-search_df=pd.read_csv(join(script_path,'gp-search.csv'),skiprows=[0])
+search_df=pd.read_csv(join(script_path,'gp-search-2.csv'),skiprows=[0])
 
 # This piece add resume capability to code
 # Load result (if exist) from code path and slice search-gp.csv from where last index of result to the end
-if os.path.isfile(join(script_path,'patents_data.csv')):
-    result=pd.read_csv(join(script_path,'patents_data.csv'),index_col=0)
+if os.path.isfile(join(script_path,'patents_data_2.csv')):
+    result=pd.read_csv(join(script_path,'patents_data_2.csv'),index_col=0)
     search_df=search_df.loc[result.index[-1]+1:,:]
 else:
     result=pd.DataFrame(columns=['ID','Title','Abstract','Description','Claims','Inventors','Current Assignee','Patent Office','Publication Date','URL'])
@@ -122,35 +122,25 @@ for (index,row),i in zip(search_df.iterrows(),progressbar.progressbar(range(len(
     else:
         abst='Not Found'
       
-    
-    patent_office=bs.find('dd',{'itemprop':'countryName'})
-    # Handle situation where patent office name not exist
-    if patent_office is None:
-        patent_office='Not Found'
-    else:
-        patent_office=patent_office.text
+
     # Add information to result dataframe
     result.at[index,'ID']=search_df.at[index,'id']
     result.at[index,'Title']=search_df.at[index,'title']
     result.at[index,'Abstract']=abst
     result.at[index,'Description']=desc
     result.at[index,'Claims']=claims
-    result.at[index,'Inventors']=search_df.at[index,'inventor/author']
-    result.at[index,'Current Assignee']=search_df.at[index,'assignee']
-    result.at[index,'Publication Date']=search_df.at[index,'publication date']
-    result.at[index,'Patent Office']=patent_office
     result.at[index,'URL']=search_df.at[index,'result link']
     
     # Save result dataframe and not scraped list every 5 iteration
-    if i%5==0:
-        result.to_csv(join(script_path,'patents_data.csv'))
+    if i%10==0:
+        result.to_csv(join(script_path,'patents_data_2.csv'))
         with open(join(script_path,'not_scrap_pickle'),'wb') as fp:
             pickle.dump(not_scraped, fp)
     # Wain 70 seconds every 10 iteration in order to avoid blocking from google
-    if i%10==0 and i!=0:
+    if i%100==0 and i!=0:
         time.sleep(70)
     
-result.to_csv(join(script_path,'patents_data.csv'))
+result.to_csv(join(script_path,'patents_data_2.csv'))
 with open(join(script_path,'not_scrap_pickle'),'wb') as fp:
             pickle.dump(not_scraped, fp)
   
