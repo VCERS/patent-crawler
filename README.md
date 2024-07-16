@@ -15,7 +15,7 @@ Google set very low rate-limit on search pages and block any activity wich detec
 - Now it's time to download gp-search.csv, csv which contain all search result for your keyword. [Search_Url_Finder.py](https://github.com/anvaari/patent-crawler/blob/main/Search_Url_Finder.py) guide you step by step to download this csv Or you can do it manualy by go to [Google Patent](https://patents.google.com/).
     - `python Search_Url_Finder.py`
 - Rename downloaded csv file to `gp-search.csv` and place it into code path.
-- Now run [Patent_Crawler.py](https://github.com/anvaari/patent-crawler/blob/main/Patent_Crawler.py). It will scrap information of all patents in `gp-search.csv` and save them to `patents_data.csv`.
+- Now run [Patent_Crawler.py](https://github.com/anvaari/patent-crawler/blob/main/Patent_Crawler.py). It will scrap information of all patents in `gp-search_2.csv` and save them to `patents_data_2.csv`.
     - `python Patent_Crawler.py`
 
 
@@ -28,9 +28,6 @@ Google set very low rate-limit on search pages and block any activity wich detec
     - Abstract
     - Description
     - Claims
-    - Inventors
-    - Patent Office
-    - Publication Date
     - URL
     
 - Patent_Crawler have capability to resume from last run. So don't worry if something unwanted happend (i.e  Power outage!)
@@ -43,14 +40,9 @@ Google set very low rate-limit on search pages and block any activity wich detec
     - not_scrap_pickle --> Contain all pantents from gp-search.csv which haven't be scrapped 
 
 
-## Contribution
-
-I really love open source community. It makes me proud to be a part of this community. So feel free to send any pull request or question in issues.
-
-Hope this Pantent_Crawler can help you :)
+## gp_search_2.csv
 
 
-# Donation
-Donation make developer of this project so happy and greatful :) So if patent crawler help you and want donate, here is my address on lightning network. You can donate bitcoin with less amount of fee :)
+All google search results from the following search result on Google Patent.
 
-lightning : mohammadanvary@lntxbot.com
+(~patent/CN111344812B) OR (~patent/US11705576B2) OR (~patent/US11258057B2) OR (~patent/US20180069262A1) OR (~patent/CN110311168B)
