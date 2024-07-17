@@ -8,6 +8,7 @@ from datetime import datetime as dt
 from selenium import webdriver
 import os
 from os.path import join
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -30,7 +31,8 @@ fx_option=webdriver.firefox.options.Options()
 fx_option.headless=True
 
 # initiate webdrive
-driver=webdriver.Firefox(executable_path=join(script_path,'geckodriver'),options=fx_option)
+service = Service(executable_path = join('/snap/bin','geckodriver'))
+driver=webdriver.Firefox(service = service,options=fx_option)
 main_url='https://patents.google.com'
 
 driver.get(main_url)
