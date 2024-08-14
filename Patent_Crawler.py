@@ -133,13 +133,13 @@ for (index, row), i in zip(search_df.iterrows(), progressbar.progressbar(range(l
 
     # Save result dataframe and not scraped list every 5 iteration
     if i % 10 == 0:
-        result.to_csv(join(script_path, 'patents_data_2.csv'))
+        result.to_json(join(script_path, 'patents_data_2.json'))
         with open(join(script_path, 'not_scrap_pickle'), 'wb') as fp:
             pickle.dump(not_scraped, fp)
     # Wain 70 seconds every 10 iteration in order to avoid blocking from google
     if i % 100 == 0 and i != 0:
         time.sleep(70)
 
-result.to_csv(join(script_path, 'patents_data_2.csv'))
+result.to_json(join(script_path, 'patents_data_2.json'))
 with open(join(script_path, 'not_scrap_pickle'), 'wb') as fp:
     pickle.dump(not_scraped, fp)
