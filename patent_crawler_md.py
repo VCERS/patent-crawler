@@ -32,7 +32,7 @@ import progressbar
 import time, os, re
 from shutil import rmtree
 from os import mkdir
-from os.path import join
+from os.path import join, exists
 from bs4 import BeautifulSoup
 import pickle
 from selenium.webdriver.common.by import By
