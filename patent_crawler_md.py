@@ -30,6 +30,8 @@ import pandas as pd
 import requests
 import progressbar
 import time, os, re
+from shutil import rmtree
+from os import mkdir
 from os.path import join
 from bs4 import BeautifulSoup
 import pickle
@@ -97,6 +99,8 @@ for (index, row), i in zip(search_df.iterrows(), progressbar.progressbar(range(l
     def md(soup, **options):
         return MarkdownConverter(**options).convert_soup(soup)
 
+    if exists("rstdir"): rmtree("rstdir")
+    mkdir("rstdir")
     mdfile = join(script_path, "rstdir", row['id']+".md")
     with open(mdfile, "w", encoding='utf-8') as file:
         # file.write(md(desc, strong_em_symbol="", sub_symbol="~", sup_symbol="^"))
